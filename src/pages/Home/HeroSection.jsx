@@ -22,7 +22,7 @@ export function HeroSection() {
     left: 0,
     width: "100%",
     height: "100%",
-    background: "url('/NagarSaarthi/hero-img.jpg') center/cover no-repeat",
+    background: "url('/hero-img.jpg') center/cover no-repeat",
     zIndex: 0,
   };
 
