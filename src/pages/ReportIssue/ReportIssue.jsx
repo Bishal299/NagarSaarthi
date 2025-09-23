@@ -603,7 +603,7 @@ const ReportIssuePage = () => {
           </form>
 
           <div className="form-img">
-            <img src="/form img.png" alt="Report Illustration" />
+            <img src="/NagarSaarthi/form img.png" alt="Report Illustration" />
           </div>
         </div>
       </div>
