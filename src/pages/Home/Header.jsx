@@ -51,7 +51,7 @@ export function Header() {
     <header style={headerStyle}>
       <div style={leftSectionStyle}>
         <img
-          src="/NagarSaarthi icon.png"
+          src="/NagarSaarthi/NagarSaarthi icon.png"
           alt="NagarSaarthi Logo"
           style={logoStyle}
         />
