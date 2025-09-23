@@ -1,6 +1,7 @@
 {
   "name": "logo",
   "private": true,
+  "homepage" : "https://bishal299.github.io/NagarSaarthi/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
