@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaInfoCircle, FaQuestionCircle, FaTachometerAlt, FaSignInAlt, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaHome,
+  FaInfoCircle,
+  FaQuestionCircle,
+  FaTachometerAlt,
+  FaUser,
+  FaSignInAlt,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 
-export function Navbar() {
+export function Navbar({ user }) {
+  // user = { role: "citizen" | "admin" } or null if not logged in
   const [activeLink, setActiveLink] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Base links
   const links = [
     { name: "home", path: "/", icon: <FaHome />, label: "Home" },
     { name: "about", path: "/about", icon: <FaInfoCircle />, label: "About Us" },
     { name: "fAQs", path: "/fAQs", icon: <FaQuestionCircle />, label: "FAQs" },
-    { name: "dashboard", path: "/dashboard", icon: <FaTachometerAlt />, label: "Dashboard" },
   ];
+
+  // Role-based links
+  if (user?.role === "citizen") {
+    links.push({ name: "profile", path: "/profile", icon: <FaUser />, label: "Citizen Profile" });
+  } else if (user?.role === "admin") {
+    links.push({ name: "dashboard", path: "/dashboard", icon: <FaTachometerAlt />, label: "Admin Dashboard" });
+  }
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -41,19 +58,21 @@ export function Navbar() {
         </ul>
 
         {/* Right side login */}
-        <div className="hidden md:flex items-center gap-2">
-          <Link
-            to="/login"
-            onClick={() => handleLinkClick("login")}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
-              activeLink === "login"
-                ? "bg-[#34495e] border-b-4 border-blue-500"
-                : "hover:bg-[#3d566e]"
-            }`}
-          >
-            <FaSignInAlt /> Sign In / Login
-          </Link>
-        </div>
+        {!user && (
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              to="/login"
+              onClick={() => handleLinkClick("login")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+                activeLink === "login"
+                  ? "bg-[#34495e] border-b-4 border-blue-500"
+                  : "hover:bg-[#3d566e]"
+              }`}
+            >
+              <FaSignInAlt /> Sign In / Login
+            </Link>
+          </div>
+        )}
 
         {/* Mobile Hamburger */}
         <div className="md:hidden">
@@ -85,19 +104,22 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                to="/login"
-                onClick={() => handleLinkClick("login")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
-                  activeLink === "login"
-                    ? "bg-[#34495e] border-l-4 border-blue-500"
-                    : "hover:bg-[#3d566e]"
-                }`}
-              >
-                <FaSignInAlt /> Sign In
-              </Link>
-            </li>
+
+            {!user && (
+              <li>
+                <Link
+                  to="/login"
+                  onClick={() => handleLinkClick("login")}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+                    activeLink === "login"
+                      ? "bg-[#34495e] border-l-4 border-blue-500"
+                      : "hover:bg-[#3d566e]"
+                  }`}
+                >
+                  <FaSignInAlt /> Sign In
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       )}

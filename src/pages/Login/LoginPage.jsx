@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Loginpage.css';
 
 const LoginPage = () => {
-  const [userType, setUserType] = useState("Citizen");
+  const [userType, setUserType] = useState('Citizen');
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    adminId: "",
+    email: '',
+    password: '',
+    adminId: ''
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -16,24 +16,36 @@ const LoginPage = () => {
 
   const handleUserTypeChange = (type) => {
     setUserType(type);
-    if (type === "Citizen") setFormData((prev) => ({ ...prev, adminId: "" }));
+    if (type === 'Citizen') {
+      setFormData(prev => ({ ...prev, adminId: '' }));
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email is invalid";
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
 
-    if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
 
-    if (userType === "Admin" && !formData.adminId) newErrors.adminId = "Admin ID is required";
+    if (userType === 'Admin' && !formData.adminId) {
+      newErrors.adminId = 'Admin ID is required';
+    }
 
     return newErrors;
   };
@@ -41,130 +53,97 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = validateForm();
+
     if (Object.keys(newErrors).length === 0) {
-      navigate(userType === "Citizen" ? "/citizen" : "/admin");
+      // ✅ Corrected path for Admin
+      if (userType === 'Citizen') {
+        navigate('/citizen');
+      } else {
+        navigate('/dashboard'); // 👈 Matches your App.jsx route
+      }
     } else {
       setErrors(newErrors);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <form
-        className="bg-white p-8 rounded-xl shadow-md w-full max-w-md"
-        onSubmit={handleSubmit}
-      >
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Login to NagarSaarthi
-        </h2>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2 className="form-title">Login to NagarSaarthi</h2>
 
-        {/* User Type Toggle */}
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="user-type-toggle">
           <button
             type="button"
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              userType === "Citizen"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => handleUserTypeChange("Citizen")}
+            className={userType === 'Citizen' ? 'active' : ''}
+            onClick={() => handleUserTypeChange('Citizen')}
           >
             👥 Citizen
           </button>
           <button
             type="button"
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              userType === "Admin"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => handleUserTypeChange("Admin")}
+            className={userType === 'Admin' ? 'active' : ''}
+            onClick={() => handleUserTypeChange('Admin')}
           >
             ⚙️ Admin
           </button>
         </div>
 
-        {/* Email */}
-        <div className="mb-4">
+        <div className="input-group">
           <input
             type="email"
             name="email"
             placeholder="Email Address"
             value={formData.email}
             onChange={handleInputChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-              errors.email ? "border-red-500" : "border-gray-300"
-            }`}
+            className={errors.email ? 'error' : ''}
             required
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-          )}
+          {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
 
-        {/* Password */}
-        {/* Password */}
-<div className="mb-4 relative">
-  <input
-    type={showPassword ? "text" : "password"}
-    name="password"
-    placeholder="Password"
-    value={formData.password}
-    onChange={handleInputChange}
-    className={`w-full px-4 py-2 pr-9 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-      errors.password ? "border-red-500" : "border-gray-300"
-    }`}
-    required
-  />
+        <div className="input-group password-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+            className={errors.password ? 'error' : ''}
+            required
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword(prev => !prev)}
+            title={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? '👀' : '👁️'}
+          </span>
+          {errors.password && <span className="error-message">{errors.password}</span>}
+        </div>
 
-  <span
-    onClick={() => setShowPassword((prev) => !prev)}
-    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 cursor-pointer text-lg"
-  >
-    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-  </span>
-
-  {errors.password && (
-    <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-  )}
-</div>
-
-
-        {/* Admin ID */}
-        {userType === "Admin" && (
-          <div className="mb-4">
+        {userType === 'Admin' && (
+          <div className="input-group admin-id">
             <input
               type="text"
               name="adminId"
               placeholder="Admin ID"
               value={formData.adminId}
               onChange={handleInputChange}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                errors.adminId ? "border-red-500" : "border-gray-300"
-              }`}
+              className={errors.adminId ? 'error' : ''}
               required
             />
-            {errors.adminId && (
-              <p className="text-red-500 text-sm mt-1">{errors.adminId}</p>
-            )}
+            {errors.adminId && <span className="error-message">{errors.adminId}</span>}
           </div>
         )}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium mt-4 hover:bg-blue-700 transition"
-        >
+        <button type="submit" className="login-button">
           Login →
         </button>
 
-        <div className="flex justify-center gap-2 mt-4 text-sm text-gray-600">
-          <a href="#forgot-password" className="hover:text-blue-600 transition">
-            Forgot Password?
-          </a>
-          <span>|</span>
-          <a href="#register" className="hover:text-blue-600 transition">
-            New User? Register
-          </a>
+        <div className="form-footer">
+          <a href="#forgot-password">Forgot Password?</a>
+          <span className="divider">|</span>
+          <a href="#register">New User? Register</a>
         </div>
       </form>
     </div>

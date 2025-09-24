@@ -269,15 +269,15 @@ const greetings = {
   return (
     <div>
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[70vh] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl flex flex-col">
+        <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[70vh] bg-white-900 rounded-2xl shadow-2xl flex flex-col">
           {/* Header */}
-          <div className="px-4 py-3 bg-gradient-to-r from-green-300 to-green-500 text-white flex justify-between items-center">
+          <div className="px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white flex justify-between items-center rounded-t-2xl">
             <div className="font-semibold">NagarSaarthi</div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <select
                 value={lang}
                 onChange={(e) => setLang(e.target.value)}
-                className="text-sm rounded px-2 py-1 bg-white/90 text-black dark:text-white dark:bg-gray-700"
+                className="text-sm rounded px-2 py-1 bg-white/80 text-black"
               >
                 {languages.map((l) => (
                   <option key={l.code} value={l.code}>
@@ -292,58 +292,56 @@ const greetings = {
           {/* Messages */}
           <div className="flex-1 overflow-hidden flex flex-col">
             <div
-              ref={messagesRef}
-              className="flex-1 overflow-auto p-4 space-y-3 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100"
-            >
-              {messages.map((m, i) => {
-                const bgClass =
-                  m.from === "bot"
-                    ? m.type === "urgent"
-                      ? "bg-green-400 text-black"
-                      : m.type === "status"
-                      ? "bg-green-200 text-black"
-                      : "bg-green-100 text-black"
-                    : "bg-gradient-to-r from-green-600 to-green-800 text-white";
+  ref={messagesRef}
+  className="flex-1 overflow-auto p-4 space-y-3 bg-white text-black"
+>
 
-                return (
-                  <div
-                    key={i}
-                    className={m.from === "bot" ? "text-left" : "text-right"}
-                  >
-                    <div
-                      className={`inline-block max-w-[85%] px-3 py-2 rounded-lg ${bgClass} break-words`}
-                    >
-                      {m.text}
-                      <div className="text-[10px] opacity-60 mt-1">
-                        {fmtTime(m.time)}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {messages.map((m, i) => {
+  // Set background white and text dark gray for issue messages
+  const bgClass = "bg-white text-gray-800 border border-gray-300";
+
+  return (
+    <div
+      key={i}
+      className={m.from === "bot" ? "text-left" : "text-right"}
+    >
+      <div
+        className={`inline-block max-w-[85%] px-3 py-2 rounded-lg ${bgClass} break-words`}
+      >
+        {m.text}
+        <div className="text-[10px] opacity-60 mt-1">
+          {fmtTime(m.time)}
+        </div>
+      </div>
+    </div>
+  );
+})}
             </div>
 
             {/* Quick Buttons */}
-            <div className="px-4 py-2 border-t bg-white dark:bg-gray-800 flex flex-wrap gap-2">
-              {quickButtons.map((b) => (
-                <button
-                  key={b.label}
-                  onClick={() => handleQuickClick(b)}
-                  className="flex items-center gap-1 px-2 py-1 rounded bg-gradient-to-r from-green-300 to-green-500 text-white text-sm font-medium hover:from-green-400 hover:to-green-600 transition"
-                >
-                  {b.icon} {b.label}
-                </button>
-              ))}
-            </div>
+            {/* Quick Buttons */}
+<div className="px-4 py-2 border-t bg-white dark:bg-white-800 flex flex-wrap gap-2">
+  {quickButtons.map((b) => (
+    <button
+      key={b.label}
+      onClick={() => handleQuickClick(b)}
+      className="flex items-center gap-1 px-3 py-2 rounded-lg border border-gray-300 bg-gray-100 text-gray-800 text-sm font-medium hover:bg-gray-200 transition"
+    >
+      {b.icon} {b.label}
+    </button>
+  ))}
+</div>
+
 
             {/* Input */}
-            <div className="px-4 py-2 border-t bg-white dark:bg-gray-800 flex flex-col gap-2">
+            <div className="px-4 py-2 border-t bg-white dark:bg-white-800 flex flex-col gap-2">
               <input
-                value={reportId}
-                onChange={(e) => setReportId(e.target.value)}
-                placeholder="Enter your Report ID"
-                className="flex-1 px-2 py-1 rounded border text-sm"
-              />
+  value={reportId}
+  onChange={(e) => setReportId(e.target.value)}
+  placeholder="Enter your Report ID"
+  className="flex-1 px-3 py-2 rounded-lg border bg-white text-black"
+/>
+
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -355,25 +353,28 @@ const greetings = {
                 className="flex gap-2 items-center"
               >
                 <input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message"
-                  className="flex-1 px-3 py-2 rounded-lg border"
-                />
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  placeholder="Type your message"
+  className="flex-1 px-3 py-2 rounded-lg border border-gray-300 bg-gray-100 text-gray-800 placeholder-gray-500"
+/>
+
                 <button
   type="button"
   onClick={() =>
     listening ? stopRecognition() : startRecognition()
   }
   className={`px-3 py-2 rounded-lg border ${
-    listening ? "bg-red-100 text-red-600" : "bg-white text-black"
+    listening
+                      ? "bg-red-100 text-red-600 border-red-400"
+                      : "bg-white-700 text-white border-white-600"
   }`}
 >
   {listening ? <FaMicrophoneAltSlash /> : <FaMicrophoneAlt />}
 </button>
                 <button
                   type="submit"
-                  className="px-3 py-2 rounded-lg bg-indigo-600 text-white"
+                  className="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
                 >
                   Send
                 </button>
@@ -383,5 +384,5 @@ const greetings = {
         </div>
       )}
     </div>
-  );
+     );
 }
