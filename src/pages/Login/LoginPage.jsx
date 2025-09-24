@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LoginPage = () => {
   const [userType, setUserType] = useState("Citizen");
@@ -102,29 +103,32 @@ const LoginPage = () => {
         </div>
 
         {/* Password */}
-        <div className="mb-4 relative">
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-              errors.password ? "border-red-500" : "border-gray-300"
-            }`}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-2/4 -translate-y-2/4 text-gray-500 hover:text-gray-700"
-          >
-            {showPassword ? "👀" : "👁️"}
-          </button>
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-          )}
-        </div>
+        {/* Password */}
+<div className="mb-4 relative">
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    placeholder="Password"
+    value={formData.password}
+    onChange={handleInputChange}
+    className={`w-full px-4 py-2 pr-9 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+      errors.password ? "border-red-500" : "border-gray-300"
+    }`}
+    required
+  />
+
+  <span
+    onClick={() => setShowPassword((prev) => !prev)}
+    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 cursor-pointer text-lg"
+  >
+    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+  </span>
+
+  {errors.password && (
+    <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+  )}
+</div>
+
 
         {/* Admin ID */}
         {userType === "Admin" && (

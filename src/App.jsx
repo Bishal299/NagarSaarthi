@@ -19,7 +19,7 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/dashboard" element={<AdminDashboard />} /> {/* Updated to match navbar */}
         <Route path="/citizen" element={<CitizenProfile />} />
         <Route path="/reportissue" element={<ReportIssue />} />
         <Route path="*" element={<Navigate to="/" />} />
