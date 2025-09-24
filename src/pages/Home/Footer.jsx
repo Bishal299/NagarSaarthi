@@ -15,7 +15,7 @@ export function Footer() {
           {/* Contact Section */}
           <div className="flex-1 min-w-[250px]">
             <h3 className="text-[#3498db] text-xl mb-5 font-semibold">Contact Us</h3>
-            <p>✉️ contact@nagarmitra.in</p>
+            <p>✉️ contact@nagarsaarthi.in</p>
             <p>📞 +91-98765-43210</p>
             <p>📍 New Delhi, India</p>
           </div>

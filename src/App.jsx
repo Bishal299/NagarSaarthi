@@ -1,25 +1,55 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 import Home from "./pages/Home/LandingPage";
 import Login from "./pages/Login/LoginPage";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import CitizenProfile from "./pages/Citizen/CitizenProfile";
 import ReportIssue from "./pages/ReportIssue/ReportIssue";
+import { NagarSaarthiChatbot } from "./pages/Home/NagarSaarthiChatbot";
 
-function App() {
+function AppWrapper() {
+  const location = useLocation();
+  const [chatOpen, setChatOpen] = useState(false);
+
+  // Don't show chatbot or floating button on login page
+  const showChat = location.pathname !== "/login";
+
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/citizen" element={<CitizenProfile />} />
         <Route path="/reportissue" element={<ReportIssue />} />
-        {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </Router>
+
+      {showChat && (
+        <>
+          <NagarSaarthiChatbot open={chatOpen} setOpen={setChatOpen} />
+
+          <button
+            onClick={() => setChatOpen(true)}
+            className={`fixed bottom-6 right-6 z-50 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-lg flex items-center gap-2
+              transition-all duration-300 ease-in-out
+              ${chatOpen ? "opacity-0 translate-y-6 pointer-events-none" : "opacity-100 translate-y-0"}
+            `}
+          >
+            💬 Chat
+          </button>
+        </>
+      )}
+    </>
   );
 }
 
+function App() {
+  return (
+    <Router>
+      <AppWrapper />
+    </Router>
+  );
+}
 
 export default App;
