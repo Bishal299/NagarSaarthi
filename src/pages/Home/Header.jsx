@@ -1,75 +1,27 @@
-
-
-
 import React from 'react';
 
 export function Header() {
-  const headerStyle = {
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    color: 'white',
-    padding: '8px 30px', // reduced vertical padding
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  };
-
-  const leftSectionStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px'
-  };
-
-  const logoStyle = {
-    height: '100px',
-    width: '100px',
-    borderRadius: '50%',
-    objectFit: 'cover'
-  };
-
-  const titleStyle = {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    margin: 0,
-    transition: 'color 0.3s ease, transform 0.3s ease',
-    cursor: 'pointer'
-  };
-
-  const mottoStyle = {
-    fontSize: '1.4rem',
-    fontWeight: 300,
-    letterSpacing: '1px',
-    margin: 0,
-    textAlign: 'right',
-    textShadow: "0 1px 2px rgba(0,0,0,0.3)"
-    // maxWidth: '50%'
-  };
-
-
-
-
   return (
-    <header style={headerStyle}>
-      <div style={leftSectionStyle}>
+    <header className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white px-4 sm:px-8 py-2 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+      
+      {/* Left Section: Logo + Title */}
+      <div className="flex items-center gap-3 sm:gap-4">
         <img
           src="/NagarSaarthi/NagarSaarthi icon.png"
           alt="NagarSaarthi Logo"
-          style={logoStyle}
+          className="h-16 w-16 sm:h-24 sm:w-24 rounded-full object-cover"
         />
         <h1
-          style={titleStyle}
-          onMouseEnter={e => {
-            // e.target.style.color = '#ffd700';
-            e.target.style.transform = 'scale(1.05)';
-          }}
-          onMouseLeave={e => {
-            e.target.style.color = 'white';
-            e.target.style.transform = 'scale(1)';
-          }}
+          className="text-2xl sm:text-4xl font-bold cursor-pointer transition-transform duration-300 hover:scale-105"
         >
           NagarSaarthi
         </h1>
       </div>
-      <p style={mottoStyle}>Your city, your voice. Empowered.</p>
+
+      {/* Motto */}
+      <p className="text-lg sm:text-2xl font-light tracking-wide text-center sm:text-right drop-shadow-md">
+        Your city, your voice. Empowered.
+      </p>
     </header>
   );
 }
