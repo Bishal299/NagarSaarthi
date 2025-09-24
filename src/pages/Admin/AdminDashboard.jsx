@@ -352,7 +352,7 @@ const AdminDashboard = () => {
             <div className="issues-table" role="table" aria-label="Issues table">
               <div className="table-header">
                 <div className="header-cell">Issue ID</div>
-                <div className="header-cell">Type & Location</div>
+                <div className="header-cell type-location">Type & Location</div>
                 <div className="header-cell">Priority</div>
                 <div className="header-cell">Status</div>
                 <div className="header-cell">Assigned To</div>
@@ -427,7 +427,7 @@ const AdminDashboard = () => {
                 <div className="header-cell">Email</div>
                 <div className="header-cell">Role</div>
                 <div className="header-cell">Join Date</div>
-                <div className="header-cell">Issues Reported</div>
+                <div className="header-cell ">Issues Reported</div>
                 <div className="header-cell">Status</div>
                 <div className="header-cell">Actions</div>
               </div>
