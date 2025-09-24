@@ -1,185 +1,106 @@
-// import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
-
-// export function Navbar() {
-//   const [activeLink, setActiveLink] = useState('home');
-
-//   const navStyle = {
-//     backgroundColor: '#2c3e50',
-//     padding: '0 30px',
-//     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-//     display: 'flex',
-//     justifyContent: 'space-between',
-//     alignItems: 'center'
-//   };
-
-//   const ulStyle = {
-//     display: 'flex',
-//     listStyle: 'none',
-//     margin: 0,
-//     padding: 0
-//   };
-
-//   const getLinkStyle = (isActive) => ({
-//     display: 'block',
-//     padding: '14px 24px',
-//     margin: '0 4px',
-//     color: '#ecf0f1',
-//     textDecoration: 'none',
-//     fontWeight: 500,
-//     borderRadius: '6px',
-//     transition: 'all 0.3s ease',
-//     borderBottom: isActive ? '3px solid #3498db' : '3px solid transparent',
-//     backgroundColor: isActive ? '#34495e' : 'transparent',
-//     cursor: 'pointer',
-//     // Hover effect
-//     ':hover': {
-//       backgroundColor: 'blue',
-//       color:'blue',
-//       transform: 'scale(1.02)'
-//     }
-//   });
-
-//   const handleLinkClick = (linkName) => {
-//     setActiveLink(linkName);
-//   };
-
-//   return (
-//     <nav style={navStyle}>
-//       {/* Left side links */}
-//       <ul style={ulStyle}>
-//         {['home', 'about', 'fAQs', 'dashboard'].map((link) => (
-//           <li key={link}>
-//             <Link
-//               to={`/${link === 'home' ? '' : link}`}
-//               style={getLinkStyle(activeLink === link)}
-//               onClick={() => handleLinkClick(link)}
-//             >
-//               {link === 'about' ? 'About Us' : link.charAt(0).toUpperCase() + link.slice(1)}
-//             </Link>
-//           </li>
-//         ))}
-//       </ul>
-
-//       {/* Right side login */}
-//       <ul style={ulStyle}>
-//         <li style={{ marginLeft: '20px' }}>
-//           <Link
-//             to="/login"
-//             style={getLinkStyle(activeLink === 'login')}
-//             onClick={() => handleLinkClick('login')}
-//           >
-//             🔐 Sign In / Log In
-//           </Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// }
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaInfoCircle, FaQuestionCircle, FaTachometerAlt, FaSignInAlt } from "react-icons/fa";
-import "./Navbar.css"; // <-- external CSS for hover
+import { FaHome, FaInfoCircle, FaQuestionCircle, FaTachometerAlt, FaSignInAlt, FaBars, FaTimes } from "react-icons/fa";
 
 export function Navbar() {
   const [activeLink, setActiveLink] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const navStyle = {
-    backgroundColor: "#2c3e50",
-    padding: "0 30px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  };
-
-  const ulStyle = {
-    display: "flex",
-    listStyle: "none",
-    margin: 0,
-    padding: 0,
-  };
-
-  const getLinkStyle = (isActive) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "14px 20px",
-    margin: "0 4px",
-    color: "#ecf0f1",
-    textDecoration: "none",
-    fontWeight: 600,
-    borderRadius: "6px",
-    transition: "all 0.3s ease",
-    borderBottom: isActive ? "3px solid #3498db" : "3px solid transparent",
-    backgroundColor: isActive ? "#34495e" : "transparent",
-    cursor: "pointer",
-  });
+  const links = [
+    { name: "home", path: "/", icon: <FaHome />, label: "Home" },
+    { name: "about", path: "/about", icon: <FaInfoCircle />, label: "About Us" },
+    { name: "fAQs", path: "/fAQs", icon: <FaQuestionCircle />, label: "FAQs" },
+    { name: "dashboard", path: "/dashboard", icon: <FaTachometerAlt />, label: "Dashboard" },
+  ];
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
+    setMenuOpen(false);
   };
 
   return (
-    <nav style={navStyle}>
-      {/* Left side links */}
-      <ul style={ulStyle}>
-        <li>
-          <Link
-            to="/"
-            style={getLinkStyle(activeLink === "home")}
-            onClick={() => handleLinkClick("home")}
-            className="nav-link"
-          >
-            <FaHome /> Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/about"
-            style={getLinkStyle(activeLink === "about")}
-            onClick={() => handleLinkClick("about")}
-            className="nav-link"
-          >
-            <FaInfoCircle /> About Us
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/fAQs"
-            style={getLinkStyle(activeLink === "fAQs")}
-            onClick={() => handleLinkClick("fAQs")}
-            className="nav-link"
-          >
-            <FaQuestionCircle /> FAQs
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/dashboard"
-            style={getLinkStyle(activeLink === "dashboard")}
-            onClick={() => handleLinkClick("dashboard")}
-            className="nav-link"
-          >
-            <FaTachometerAlt /> Dashboard
-          </Link>
-        </li>
-      </ul>
+    <nav className="bg-[#2c3e50] shadow-md w-full z-50">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        {/* Desktop Links */}
+        <ul className="hidden md:flex gap-2">
+          {links.map((link) => (
+            <li key={link.name}>
+              <Link
+                to={link.path}
+                onClick={() => handleLinkClick(link.name)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+                  activeLink === link.name
+                    ? "bg-[#34495e] border-b-4 border-blue-500"
+                    : "hover:bg-[#3d566e]"
+                }`}
+              >
+                {link.icon} {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-      {/* Right side login */}
-      <ul style={ulStyle}>
-        <li style={{ marginLeft: "20px" }}>
+        {/* Right side login */}
+        <div className="hidden md:flex items-center gap-2">
           <Link
             to="/login"
-            style={getLinkStyle(activeLink === "login")}
             onClick={() => handleLinkClick("login")}
-            className="nav-link"
+            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+              activeLink === "login"
+                ? "bg-[#34495e] border-b-4 border-blue-500"
+                : "hover:bg-[#3d566e]"
+            }`}
           >
-            <FaSignInAlt /> Sign In / Log In
+            <FaSignInAlt /> Sign In / Login
           </Link>
-        </li>
-      </ul>
+        </div>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-white text-2xl"
+          >
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#2c3e50]">
+          <ul className="flex flex-col gap-2 p-4">
+            {links.map((link) => (
+              <li key={link.name}>
+                <Link
+                  to={link.path}
+                  onClick={() => handleLinkClick(link.name)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+                    activeLink === link.name
+                      ? "bg-[#34495e] border-l-4 border-blue-500"
+                      : "hover:bg-[#3d566e]"
+                  }`}
+                >
+                  {link.icon} {link.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/login"
+                onClick={() => handleLinkClick("login")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-white transition-all ${
+                  activeLink === "login"
+                    ? "bg-[#34495e] border-l-4 border-blue-500"
+                    : "hover:bg-[#3d566e]"
+                }`}
+              >
+                <FaSignInAlt /> Sign In
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }

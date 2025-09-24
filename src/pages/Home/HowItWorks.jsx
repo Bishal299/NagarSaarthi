@@ -19,78 +19,19 @@ const steps = [
 ];
 
 export function HowItWorks() {
-  const sectionStyle = {
-    padding: '80px 20px',
-    backgroundColor: '#f8f9fa'
-  };
-
-  const containerStyle = {
-    // maxWidth: '1200px',
-    margin: '0 auto'
-  };
-
-  const titleStyle = {
-    textAlign: 'center',
-    fontSize: '2.5rem',
-    marginBottom: '60px',
-    color: '#2c3e50',
-    fontWeight: 700
-  };
-
-  const stepsContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '40px',
-    flexWrap: 'wrap'
-  };
-
-  const stepStyle = {
-    background: 'white',
-    padding: '40px 30px',
-    borderRadius: '15px',
-    textAlign: 'center',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-    flex: '1 1 300px',
-    // maxWidth: '350px',
-    transition: 'transform 0.3s ease'
-  };
-
-  const iconStyle = {
-    fontSize: '3rem',
-    marginBottom: '20px'
-  };
-
-  const stepTitleStyle = {
-    fontSize: '1.5rem',
-    marginBottom: '15px',
-    color: '#2c3e50',
-    fontWeight: 600
-  };
-
-  const stepDescStyle = {
-    color: '#7f8c8d',
-    lineHeight: 1.8
-  };
-
   return (
-    <section style={sectionStyle} id="how-it-works">
-      <div style={containerStyle}>
-        <h2 style={titleStyle}>How It Works</h2>
-        <div style={stepsContainerStyle}>
+    <section className="py-20 px-4 bg-gray-100" id="how-it-works">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-16">How It Works</h2>
+        <div className="flex flex-wrap justify-center gap-8">
           {steps.map((step, index) => (
-            <div 
-              key={index} 
-              style={stepStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-10px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+            <div
+              key={index}
+              className="bg-white p-10 rounded-2xl text-center shadow-xl flex-1 min-w-[280px] max-w-sm transform transition-transform duration-300 hover:-translate-y-3"
             >
-              <div style={iconStyle}>{step.icon}</div>
-              <h3 style={stepTitleStyle}>{step.title}</h3>
-              <p style={stepDescStyle}>{step.description}</p>
+              <div className="text-6xl mb-5">{step.icon}</div>
+              <h3 className="text-2xl font-semibold mb-4 text-gray-800">{step.title}</h3>
+              <p className="text-gray-500 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
