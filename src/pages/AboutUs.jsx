@@ -25,7 +25,15 @@ function AboutUs({ data = {} }) {
       "Track Progress — real-time status updates",
       "Feedback & Closure — rate and comment after resolution",
     ],
-    images = [],
+    
+images = [
+  "/NagarSaarthi/images/img1.jpg",
+  "/NagarSaarthi/images/img2.jpg",
+  "/NagarSaarthi/images/img3.png",
+  "/NagarSaarthi/images/img4.png",
+],
+
+
     contact = {
       email: "support@nagarsaarthi.example",
       phone: "+91 98765 43210",
@@ -72,10 +80,11 @@ function AboutUs({ data = {} }) {
         <div className="lg:w-1/2">
           {image ? (
             <img
-              src={image}
-              alt={alt}
-              className="w-full h-64 sm:h-80 object-cover rounded-2xl shadow-sm border"
-            />
+  src={image}
+  alt={alt}
+  className="w-full h-auto max-h-96 object-contain rounded-2xl shadow-sm border"
+/>
+
           ) : (
             <PlaceholderImage alt={alt} />
           )}
@@ -170,7 +179,7 @@ function AboutUs({ data = {} }) {
               </p>
             </div>
           </div>
-          <p className="mt-6 text-xs text-gray-400">© {new Date().getFullYear()} Civic Reporting Platform — All rights reserved.</p>
+          <p className="mt-6 text-xs text-gray-400">© {new Date().getFullYear()} NagarSaarthi-Civic Reporting Platform — All rights reserved.</p>
         </div>
       </footer>
     </main>
