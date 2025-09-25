@@ -17,7 +17,10 @@ export function HeroSection() {
       ></div>
 
       {/* Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/40 backdrop-blur-sm z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10" style={{
+          backdropFilter: "blur(1.5px)",
+          WebkitBackdropFilter: "blur(1.5px)", // Safari support
+      }}></div>
 
       {/* Content */}
       <div className="relative z-20 max-w-3xl px-4">
